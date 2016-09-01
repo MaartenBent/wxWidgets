@@ -23,7 +23,7 @@
     #pragma hdrstop
 #endif
 
-#if wxUSE_LISTCTRL
+#if wxUSE_LISTCTRL && !defined(wxUSE_LISTCTRL_GENERIC)
 
 #include "wx/listctrl.h"
 
@@ -2040,7 +2040,9 @@ bool wxListCtrl::MSWCommand(WXUINT cmd, WXWORD id_)
     else
         return false;
 }
+#endif // wxUSE_LISTCTRL
 
+#if wxUSE_LISTCTRL
 // utility used by wxListCtrl::MSWOnNotify and by wxDataViewHeaderWindowMSW::MSWOnNotify
 int WXDLLIMPEXP_CORE wxMSWGetColumnClicked(NMHDR *nmhdr, POINT *ptClick)
 {
@@ -2079,7 +2081,9 @@ int WXDLLIMPEXP_CORE wxMSWGetColumnClicked(NMHDR *nmhdr, POINT *ptClick)
 
     return wxNOT_FOUND;
 }
+#endif
 
+#if wxUSE_LISTCTRL && !defined(wxUSE_LISTCTRL_GENERIC)
 bool wxListCtrl::MSWOnNotify(int idCtrl, WXLPARAM lParam, WXLPARAM *result)
 {
 

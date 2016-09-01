@@ -251,7 +251,7 @@ private:
     wxDECLARE_DYNAMIC_CLASS(wxGenericListCtrl);
 };
 
-#if (!defined(__WXMSW__) || defined(__WXUNIVERSAL__)) && (!(defined(__WXMAC__) && wxOSX_USE_CARBON) || defined(__WXUNIVERSAL__ ))
+#if (!defined(__WXMSW__) || defined(__WXUNIVERSAL__)) && (!(defined(__WXMAC__) && wxOSX_USE_CARBON) || defined(__WXUNIVERSAL__ )) || defined(wxUSE_LISTCTRL_GENERIC)
 /*
  * wxListCtrl has to be a real class or we have problems with
  * the run-time information.

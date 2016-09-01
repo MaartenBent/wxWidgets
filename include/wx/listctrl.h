@@ -27,7 +27,7 @@ extern WXDLLIMPEXP_DATA_CORE(const char) wxListCtrlNameStr[];
 // include the wxListCtrl class declaration
 // ----------------------------------------------------------------------------
 
-#if defined(__WXMSW__) && !defined(__WXUNIVERSAL__)
+#if defined(__WXMSW__) && !defined(__WXUNIVERSAL__) && !defined(wxUSE_LISTCTRL_GENERIC)
     #include "wx/msw/listctrl.h"
 #elif defined(__WXQT__) && !defined(__WXUNIVERSAL__)
     #include "wx/qt/listctrl.h"

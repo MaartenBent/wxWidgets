@@ -20,7 +20,7 @@
     #pragma hdrstop
 #endif
 
-#if wxUSE_LISTCTRL
+#if wxUSE_LISTCTRL && defined(wxUSE_LISTCTRL_GENERIC)
 
 #include "wx/listctrl.h"
 
