@@ -966,6 +966,10 @@ wxListHeaderWindow::wxListHeaderWindow()
 
     m_owner = NULL;
     m_resizeCursor = NULL;
+
+    m_enableSortCol = false;
+    m_sortCol = -1;
+    m_sortAsc = true;
 }
 
 bool wxListHeaderWindow::Create( wxWindow *win,
@@ -1084,6 +1088,14 @@ void wxListHeaderWindow::OnPaint( wxPaintEvent &WXUNUSED(event) )
             flags |= wxCONTROL_SELECTED;
 #endif
 
+        wxHeaderSortIconType sortArrow = wxHDR_SORT_ICON_NONE;
+        if (m_enableSortCol && i == m_sortCol) {
+            if (m_sortAsc)
+                sortArrow = wxHDR_SORT_ICON_UP;
+            else
+                sortArrow = wxHDR_SORT_ICON_DOWN;
+        }
+
         if (i == 0)
            flags |= wxCONTROL_SPECIAL; // mark as first column
 
@@ -1092,7 +1104,8 @@ void wxListHeaderWindow::OnPaint( wxPaintEvent &WXUNUSED(event) )
                                     this,
                                     dc,
                                     wxRect(x, HEADER_OFFSET_Y, cw, ch),
-                                    flags
+                                    flags,
+                                    sortArrow
                                 );
 
         // see if we have enough space for the column label
@@ -1332,6 +1345,12 @@ void wxListHeaderWindow::OnMouse( wxMouseEvent &event )
                             colItem.SetState(state & ~wxLIST_STATE_SELECTED);
                         m_owner->SetColumn(i, colItem);
                     }
+
+                    if (m_sortCol != m_column)
+                        m_sortAsc = true;
+                    else
+                        m_sortAsc = !m_sortAsc;
+                    m_sortCol = m_column;
                 }
 
                 SendListEvent( event.LeftDown()
@@ -4790,6 +4809,39 @@ void wxGenericListCtrl::CheckItem(long item, bool state)
 {
     if (InReportView())
         m_mainWin->CheckItem(item, state);
+}
+
+void wxGenericListCtrl::EnableSortColumns(const bool enable)
+{
+    if (m_headerWin) {
+        m_headerWin->m_enableSortCol = enable;
+        Refresh();
+    }
+}
+
+int wxGenericListCtrl::GetSortColumn() const
+{
+    if (m_headerWin)
+        return m_headerWin->m_sortCol;
+
+    return -1;
+}
+
+bool wxGenericListCtrl::IsAscendingSort() const
+{
+    if (m_headerWin)
+        return m_headerWin->m_sortAsc;
+
+    return true;
+}
+
+void wxGenericListCtrl::SetSortColumn(const int col, const bool asc)
+{
+    if (m_headerWin) {
+        m_headerWin->m_sortCol = col;
+        m_headerWin->m_sortAsc = asc;
+        Refresh();
+    }
 }
 
 bool wxGenericListCtrl::IsItemChecked(long item) const

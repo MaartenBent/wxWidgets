@@ -414,11 +414,16 @@ public:
     // Header attributes support: only implemented in wxMSW currently.
     virtual bool SetHeaderAttr(const wxItemAttr& WXUNUSED(attr)) { return false; }
 
-    // Checkboxes support: only implemented in wxMSW currently.
+    // Checkboxes support: implemented in wxMSW and generic versions
     virtual bool HasCheckBoxes() const { return false; }
     virtual bool EnableCheckBoxes(bool WXUNUSED(enable) = true) { return false; }
     virtual bool IsItemChecked(long WXUNUSED(item)) const { return false; }
     virtual void CheckItem(long WXUNUSED(item), bool WXUNUSED(check)) { }
+
+    virtual void EnableSortColumns(const bool WXUNUSED(enable) = true) { };
+    virtual int GetSortColumn() const { return -1; }
+    virtual bool IsAscendingSort() const { return true; }
+    virtual void SetSortColumn(const int WXUNUSED(col), const bool WXUNUSED(asc)) { }
 
 protected:
     // Real implementations methods to which our public forwards.

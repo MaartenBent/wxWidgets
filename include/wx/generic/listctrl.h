@@ -106,6 +106,11 @@ public:
     virtual bool IsItemChecked(long item) const wxOVERRIDE;
     virtual void CheckItem(long item, bool check) wxOVERRIDE;
 
+    virtual void EnableSortColumns(const bool enable = true) wxOVERRIDE;
+    virtual int GetSortColumn() const wxOVERRIDE;
+    virtual bool IsAscendingSort() const wxOVERRIDE;
+    virtual void SetSortColumn(const int col, const bool asc) wxOVERRIDE;
+
     void SetSingleStyle( long style, bool add = true ) ;
     void SetWindowStyleFlag( long style ) wxOVERRIDE;
     void RecreateWindow() {}

@@ -222,6 +222,11 @@ public:
     virtual bool IsItemChecked(long item) const wxOVERRIDE;
     virtual void CheckItem(long item, bool check) wxOVERRIDE;
 
+    virtual void EnableSortColumns(const bool enable = true) wxOVERRIDE;
+    virtual int GetSortColumn() const wxOVERRIDE;
+    virtual bool IsAscendingSort() const wxOVERRIDE;
+    virtual void SetSortColumn(const int col, const bool asc) wxOVERRIDE;
+
     // Gets the number of selected items in the list control
     int GetSelectedItemCount() const;
 
@@ -410,6 +415,10 @@ protected:
     int               m_colCount;   // Windows doesn't have GetColumnCount so must
                                     // keep track of inserted/deleted columns
 
+    bool m_enableSortCol;
+    int m_sortCol;
+    bool m_sortAsc;
+
     // all wxMSWListItemData objects we use
     wxVector<wxMSWListItemData *> m_internalData;
 
@@ -454,6 +463,7 @@ private:
     // in-place editor control.
     void OnCharHook(wxKeyEvent& event);
 
+    void DrawSortArrow();
 
     // Object using for header custom drawing if necessary, may be NULL.
     wxMSWListHeaderCustomDraw* m_headerCustomDraw;

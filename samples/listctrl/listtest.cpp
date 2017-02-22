@@ -69,13 +69,14 @@ const wxChar *SMALL_VIRTUAL_VIEW_ITEMS[][2] =
 static const int NUM_ICONS = 9;
 
 int wxCALLBACK
-MyCompareFunction(wxIntPtr item1, wxIntPtr item2, wxIntPtr WXUNUSED(sortData))
+MyCompareFunction(wxIntPtr item1, wxIntPtr item2, wxIntPtr sortData)
 {
+    bool ascending = (sortData == 1);
     // inverse the order
     if (item1 < item2)
-        return 1;
+        return ascending ? -1 : 1;
     if (item1 > item2)
-        return -1;
+        return ascending ? 1 : -1;
 
     return 0;
 }
@@ -465,6 +466,7 @@ void MyFrame::RecreateList(long flags, bool withText)
                                     wxDefaultPosition, wxDefaultSize,
                                     flags |
                                     wxBORDER_THEME | wxLC_EDIT_LABELS);
+        m_listCtrl->EnableSortColumns(true);
 
         switch ( flags & wxLC_MASK_TYPE )
         {
@@ -1047,6 +1049,11 @@ void MyListCtrl::SetColumnImage(int col, int image)
 
 void MyListCtrl::OnColClick(wxListEvent& event)
 {
+    // Note: Items are sorted on ItemData, not on clicked column.
+    EnableSortColumns(event.GetColumn() == 0);
+    if (event.GetColumn() == 0)
+        SortItems(MyCompareFunction, IsAscendingSort());
+
     int col = event.GetColumn();
 
     // set or unset image

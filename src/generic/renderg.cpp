@@ -352,7 +352,6 @@ wxRendererGeneric::DrawHeaderButtonContents(wxWindow *win,
     }
 
     // Draw an up or down arrow
-    int arrowSpace = 0;
     if (sortArrow != wxHDR_SORT_ICON_NONE )
     {
         wxRect ar = rect;
@@ -361,38 +360,35 @@ wxRendererGeneric::DrawHeaderButtonContents(wxWindow *win,
         ar.SetSize(wxWindow::FromDIP(wxSize(8, 4), win));
         ar.y += (rect.height - ar.height)/2;
         ar.x = ar.x + rect.width - 3*ar.width/2;
-        arrowSpace = 3*ar.width/2; // space to preserve when drawing the label
 
         wxPoint triPt[3];
         if ( sortArrow & wxHDR_SORT_ICON_UP )
         {
-            triPt[0].x = ar.width / 2;
-            triPt[0].y = 0;
-            triPt[1].x = ar.width;
-            triPt[1].y = ar.height;
-            triPt[2].x = 0;
+            triPt[0].x = 0;
+            triPt[0].y = ar.height;
+            triPt[1].x = ar.width / 2;
+            triPt[1].y = 0;
+            triPt[2].x = ar.width;
             triPt[2].y = ar.height;
         }
         else
         {
             triPt[0].x = 0;
             triPt[0].y = 0;
-            triPt[1].x = ar.width;
-            triPt[1].y = 0;
-            triPt[2].x = ar.width / 2;
-            triPt[2].y = ar.height;
+            triPt[1].x = ar.width / 2;
+            triPt[1].y = ar.height;
+            triPt[2].x = ar.width;
+            triPt[2].y = 0;
         }
 
         wxColour c = (params && params->m_arrowColour.IsOk()) ?
             params->m_arrowColour : wxSystemSettings::GetColour(wxSYS_COLOUR_3DSHADOW);
 
-        wxDCPenChanger setPen(dc, c);
-        wxDCBrushChanger setBrush(dc, c);
+        wxDCPenChanger setPen(dc, wxPen(c, 2));
 
         wxDCClipper clip(dc, rect);
-        dc.DrawPolygon( 3, triPt, ar.x, ar.y);
+        dc.DrawLines(3, triPt, rect.x + rect.width / 2 - ar.width / 2, 0);
     }
-    labelWidth += arrowSpace;
 
     int bmpWidth = 0;
 
