@@ -570,12 +570,12 @@ ID2D1Factory* wxD2D1Factory()
 #if defined(__WXDEBUG__) && defined(__VISUALC__)
         if ( wxTheAssertHandler && wxGetWinVersion() >= wxWinVersion_8 )
         {
-            factoryOptions.debugLevel = D2D1_DEBUG_LEVEL_WARNING;
+            factoryOptions.debugLevel = D2D1_DEBUG_LEVEL_ERROR;
         }
 #endif  //__WXDEBUG__
 
         HRESULT hr = wxDirect2D::D2D1CreateFactory(
-            D2D1_FACTORY_TYPE_SINGLE_THREADED,
+            D2D1_FACTORY_TYPE_MULTI_THREADED,
             wxIID_ID2D1Factory,
             &factoryOptions,
             reinterpret_cast<void**>(&gs_ID2D1Factory)
@@ -604,7 +604,7 @@ IDWriteFactory* wxDWriteFactory()
         HRESULT hr = gs_IDWriteFactory->RegisterFontCollectionLoader(wxDirect2DFontCollectionLoader::GetLoader());
         if ( FAILED(hr) )
         {
-            wxLogError(_("Could not register custom DirectWrite font loader."));
+            wxLogApiError("RegisterFontCollectionLoader", hr);
         }
 #endif // wxUSE_PRIVATE_FONTS
     }
@@ -3626,7 +3626,7 @@ protected:
 
         // Get Direct2D device's corresponding device context object.
         hr = m_device->CreateDeviceContext(
-            D2D1_DEVICE_CONTEXT_OPTIONS_NONE,
+            D2D1_DEVICE_CONTEXT_OPTIONS_ENABLE_MULTITHREADED_OPTIMIZATIONS,
             &m_context);
         wxCHECK_HRESULT_RET(hr);
 
@@ -5108,7 +5108,7 @@ public :
     wxGraphicsFont CreateFont(
         double sizeInPixels, const wxString& facename,
         int flags = wxFONTFLAG_DEFAULT,
-        const wxColour& col = *wxBLACK) override;
+        const wxColour& col = wxColour(0, 0, 0)) override;
 
     virtual wxGraphicsFont CreateFontAtDPI(const wxFont& font,
                                            const wxRealPoint& dpi,
@@ -5433,7 +5433,7 @@ void wxD2DRenderer::GetVersion(int* major, int* minor, int* micro) const
         }
 
         if (micro)
-            *micro = 0;
+            *micro = -1;
     }
 }
 

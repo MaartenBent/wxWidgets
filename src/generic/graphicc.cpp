@@ -3358,11 +3358,11 @@ public :
                               const wxGraphicsMatrix& matrix = wxNullGraphicsMatrix) override;
 
     // sets the font
-    virtual wxGraphicsFont CreateFont( const wxFont &font , const wxColour &col = *wxBLACK ) override ;
+    virtual wxGraphicsFont CreateFont( const wxFont &font , const wxColour &col = wxColour(0, 0, 0) ) override ;
     virtual wxGraphicsFont CreateFont(double sizeInPixels,
                                       const wxString& facename,
                                       int flags = wxFONTFLAG_DEFAULT,
-                                      const wxColour& col = *wxBLACK) override;
+                                      const wxColour& col = wxColour(0, 0, 0)) override;
     virtual wxGraphicsFont CreateFontAtDPI(const wxFont& font,
                                            const wxRealPoint& dpi,
                                            const wxColour& col) override;
