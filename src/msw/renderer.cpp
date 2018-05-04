@@ -353,7 +353,7 @@ void wxRendererMSWBase::DrawItemSelectionRect(wxWindow *win,
         }
 
         wxDCBrushChanger setBrush(dc, wxBrush(color));
-        wxDCPenChanger setPen(dc, *wxTRANSPARENT_PEN);
+        wxDCPenChanger setPen(dc, wxPen(wxColour(0, 0, 0), 1, wxPENSTYLE_TRANSPARENT));
         dc.DrawRectangle(rect);
     }
 
@@ -472,8 +472,8 @@ wxRendererMSW::DrawPushButton(wxWindow *win,
     {
         // DrawFrameControl() doesn't seem to support default buttons so we
         // have to draw the border ourselves
-        wxDCPenChanger pen(dc, *wxBLACK_PEN);
-        wxDCBrushChanger brush(dc, *wxTRANSPARENT_BRUSH);
+        wxDCPenChanger pen(dc, wxPen(wxColour(0, 0, 0)));
+        wxDCBrushChanger brush(dc, wxBrush(wxColour(0, 0, 0), wxBRUSHSTYLE_TRANSPARENT));
         dc.DrawRectangle(rect);
         rect.Deflate(1);
     }
@@ -1271,7 +1271,7 @@ wxRendererXP::DrawSplitterSash(wxWindow *win,
 {
     if ( !win->HasFlag(wxSP_NO_XP_THEME) )
     {
-        wxDCPenChanger setPen(dc, *wxTRANSPARENT_PEN);
+        wxDCPenChanger setPen(dc, wxPen(wxColour(0, 0, 0), 1, wxPENSTYLE_TRANSPARENT));
         wxDCBrushChanger setBrush(dc, wxBrush(wxSystemSettings::GetColour(wxSYS_COLOUR_BTNFACE)));
         if ( orient == wxVERTICAL )
         {
