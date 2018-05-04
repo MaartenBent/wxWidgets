@@ -27,6 +27,10 @@
 #include "wx/display.h"
 #include "wx/scopedarray.h"
 
+#include "wx/fontutil.h"
+#include "wx/settings.h"
+static wxNativeFontInfo m_fontInfo(*wxSystemSettings::GetFont(wxSYS_DEFAULT_GUI_FONT).GetNativeFontInfo());
+
 //-----------------------------------------------------------------------------
 // Local functions
 //-----------------------------------------------------------------------------
@@ -227,9 +231,9 @@ void wxGCDCImpl::Init(wxGraphicsContext* ctx)
 
     m_ok = false;
 
-    m_pen = *wxBLACK_PEN;
-    m_font = *wxNORMAL_FONT;
-    m_brush = *wxWHITE_BRUSH;
+    m_pen = wxPen(wxColour(0, 0, 0));
+    m_font = wxFont(m_fontInfo);
+    m_brush = wxBrush(wxColour(255, 255, 255));
 
     m_graphicContext = NULL;
     if (ctx)
@@ -266,7 +270,7 @@ void wxGCDCImpl::DoDrawBitmap( const wxBitmap &bmp, wxCoord x, wxCoord y,
     int h = bmp.GetLogicalHeight();
     if ( bmp.GetDepth() == 1 )
     {
-        m_graphicContext->SetPen(*wxTRANSPARENT_PEN);
+        m_graphicContext->SetPen(wxPen(wxColour(0, 0, 0), 1, wxPENSTYLE_TRANSPARENT));
         m_graphicContext->SetBrush(m_textBackgroundColour);
         m_graphicContext->DrawRectangle( x, y, w, h );
         m_graphicContext->SetBrush(m_textForegroundColour);
@@ -814,7 +818,7 @@ void wxGCDCImpl::DoDrawPoint( wxCoord x, wxCoord y )
         return;
 
     wxDCBrushChanger brushChanger(*GetOwner(), wxBrush(m_pen.GetColour()));
-    wxDCPenChanger penChanger(*GetOwner(), *wxTRANSPARENT_PEN);
+    wxDCPenChanger penChanger(*GetOwner(), wxPen(wxColour(0, 0, 0), 1, wxPENSTYLE_TRANSPARENT));
 
     // Raster-based DCs draw a single pixel regardless of scale
     m_graphicContext->DrawRectangle(x, y, 1 / m_scaleX, 1 / m_scaleY);
@@ -1318,8 +1322,8 @@ void wxGCDCImpl::Clear()
         return;
 
     m_graphicContext->SetBrush( m_backgroundBrush.IsOk() ? m_backgroundBrush
-                                                         : *wxWHITE_BRUSH );
-    wxPen p = *wxTRANSPARENT_PEN;
+                                                         : wxBrush(wxColour(255, 255, 255)) );
+    wxPen p = wxPen(wxColour(0, 0, 0), 1, wxPENSTYLE_TRANSPARENT);
     m_graphicContext->SetPen( p );
     wxCompositionMode formerMode = m_graphicContext->GetCompositionMode();
     m_graphicContext->SetCompositionMode(wxCOMPOSITION_SOURCE);
@@ -1382,7 +1386,7 @@ void wxGCDCImpl::DoGradientFillLinear(const wxRect& rect,
 
     m_graphicContext->SetBrush( m_graphicContext->CreateLinearGradientBrush(
         start.x,start.y,end.x,end.y, initialColour, destColour));
-    m_graphicContext->SetPen(*wxTRANSPARENT_PEN);
+    m_graphicContext->SetPen(wxPen(wxColour(0, 0, 0), 1, wxPENSTYLE_TRANSPARENT));
     m_graphicContext->DrawRectangle(rect.x,rect.y,rect.width,rect.height);
     m_graphicContext->SetPen(m_pen);
     m_graphicContext->SetBrush(m_brush);
@@ -1405,7 +1409,7 @@ void wxGCDCImpl::DoGradientFillConcentric(const wxRect& rect,
         nRadius = cy;
 
     // make sure the background is filled (todo move into specific platform implementation ?)
-    m_graphicContext->SetPen(*wxTRANSPARENT_PEN);
+    m_graphicContext->SetPen(wxPen(wxColour(0, 0, 0), 1, wxPENSTYLE_TRANSPARENT));
     m_graphicContext->SetBrush( wxBrush( destColour) );
     m_graphicContext->DrawRectangle(rect.x,rect.y,rect.width,rect.height);
 

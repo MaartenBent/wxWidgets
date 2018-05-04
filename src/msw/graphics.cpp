@@ -649,7 +649,7 @@ public :
     virtual wxGraphicsFont CreateFont(double sizeInPixels,
                                       const wxString& facename,
                                       int flags = wxFONTFLAG_DEFAULT,
-                                      const wxColour& col = *wxBLACK) wxOVERRIDE;
+                                      const wxColour& col = wxColour(0, 0, 0)) wxOVERRIDE;
 
     virtual wxGraphicsFont CreateFontAtDPI(const wxFont& font,
                                            const wxRealPoint& dpi,
@@ -3023,7 +3023,7 @@ void wxGDIPlusRenderer::GetVersion(int *major, int *minor, int *micro) const
     if ( minor )
         *minor = wxPlatformInfo::Get().GetOSMinorVersion();
     if ( micro )
-        *micro = 0;
+        *micro = -1;
 }
 
 // Shutdown GDI+ at app exit, before possible dll unload
