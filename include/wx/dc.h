@@ -740,8 +740,8 @@ protected:
     wxPen             m_pen;
     wxBrush           m_brush;
     wxBrush           m_backgroundBrush;
-    wxColour          m_textForegroundColour = *wxBLACK;
-    wxColour          m_textBackgroundColour = *wxWHITE;
+    wxColour          m_textForegroundColour = wxColour(0, 0, 0);
+    wxColour          m_textBackgroundColour = wxColour(255, 255, 255);
     wxFont            m_font;
 
 #if wxUSE_PALETTE
