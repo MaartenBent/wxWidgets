@@ -32,6 +32,10 @@
 
 #include "wx/msw/private.h"
 
+// #include "wx/fontutil.h"
+#include "wx/settings.h"
+// static wxNativeFontInfo m_fontInfo(*wxSystemSettings::GetFont(wxSYS_DEFAULT_GUI_FONT).GetNativeFontInfo());
+
 // ----------------------------------------------------------------------------
 // wxMemoryDCImpl
 // ----------------------------------------------------------------------------
@@ -67,9 +71,10 @@ void wxMemoryDCImpl::Init()
 {
     if ( m_ok )
     {
-        SetBrush(*wxWHITE_BRUSH);
-        SetPen(*wxBLACK_PEN);
-        SetFont(*wxNORMAL_FONT);
+        SetBrush(wxBrush(wxColour(255, 255, 255)));
+        SetPen(wxPen(wxColour(0, 0, 0)));
+        // SetFont(wxFont(m_fontInfo));
+        SetFont(wxFont(wxSystemSettings::GetFont(wxSYS_DEFAULT_GUI_FONT)));
 
         // the background mode is only used for text background and is set in
         // DrawText() to OPAQUE as required, otherwise always TRANSPARENT
