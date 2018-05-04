@@ -742,7 +742,7 @@ wxDCImpl::DoDrawPolyPolygon(int n,
     }
 
     {
-        wxDCPenChanger setTransp(*m_owner, *wxTRANSPARENT_PEN);
+        wxDCPenChanger setTransp(*m_owner, wxPen(wxColour(0, 0, 0), 1, wxPENSTYLE_TRANSPARENT));
         DoDrawPolygon(j, pts.get(), xoffset, yoffset, fillStyle);
     }
 
@@ -974,7 +974,7 @@ void wxDCImpl::DoGradientFillLinear(const wxRect& rect,
     const float inc = float(span) / bands;
     float offsetNext = inc;
     float r = r1, g = g1, b = b1;
-    SetPen(*wxTRANSPARENT_PEN);
+    SetPen(wxPen(wxColour(0, 0, 0), 1, wxPENSTYLE_TRANSPARENT));
     wxColour color(c1);
     wxBrush brush(color);
     for (;;)

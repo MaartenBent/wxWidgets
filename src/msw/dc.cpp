@@ -2301,7 +2301,7 @@ bool wxMSWDCImpl::DoStretchBlit(wxCoord xdest, wxCoord ydest,
 
             // set masked area in buffer to BLACK
             {
-                wxTextColoursChanger textCol2(GetHdc(), *wxBLACK, *wxWHITE);
+                wxTextColoursChanger textCol2(GetHdc(), wxColour(0, 0, 0), wxColour(255, 255, 255));
                 if ( !::StretchBlt(dc_buffer, 0, 0, dstWidth, dstHeight,
                                    dc_mask, xsrcMask, ysrcMask,
                                    srcWidth, srcHeight, SRCAND) )
