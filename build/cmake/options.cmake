@@ -8,7 +8,7 @@
 #############################################################################
 
 # Global build options
-wx_option(wxBUILD_SHARED "Build wx libraries as shared libs" ${BUILD_SHARED_LIBS})
+wx_option(wxBUILD_SHARED "Build wx libraries as shared libs" OFF)
 wx_option(wxBUILD_MONOLITHIC "build wxWidgets as single library" OFF)
 wx_option(wxBUILD_SAMPLES "Build only important samples (SOME) or ALL" OFF
     STRINGS SOME ALL OFF)
@@ -53,7 +53,7 @@ endif()
 if(DEFINED CMAKE_CXX_STANDARD)
     set(wxCXX_STANDARD_DEFAULT ${CMAKE_CXX_STANDARD})
 else()
-    set(wxCXX_STANDARD_DEFAULT COMPILER_DEFAULT)
+    set(wxCXX_STANDARD_DEFAULT 17)
 endif()
 wx_option(wxBUILD_CXX_STANDARD "C++ standard used to build wxWidgets targets"
           ${wxCXX_STANDARD_DEFAULT} STRINGS COMPILER_DEFAULT 11 14 17 20 23 26)
@@ -510,7 +510,7 @@ if(WIN32)
     wx_option(wxUSE_TASKBARICON_BALLOONS "enable wxTaskBarIcon::ShowBalloon() method (Win32 only)")
     wx_option(wxUSE_UXTHEME "enable support for Windows XP themed look (Win32 only)")
     wx_option(wxUSE_WEBVIEW_EDGE "use wxWebView Edge (Chromium) backend (Windows only)")
-    wx_option(wxUSE_WEBVIEW_EDGE_STATIC "use wxWebView Edge with static loader" OFF)
+    wx_option(wxUSE_WEBVIEW_EDGE_STATIC "use wxWebView Edge with static loader")
     wx_option(wxUSE_WEBVIEW_IE "use wxWebView IE backend (Win32 only)")
     wx_option(wxUSE_WINRT "enable WinRT support" ${wxUSE_WINRT_DEFAULT})
     wx_option(wxUSE_WXDIB "use wxDIB class (Win32 only)")
