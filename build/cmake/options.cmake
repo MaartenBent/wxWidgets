@@ -97,7 +97,7 @@ mark_as_advanced(wxBUILD_INSTALL_PDB)
 
 
 # STL options
-wx_option(wxUSE_STL "use standard C++ classes for everything" OFF)
+wx_option(wxUSE_STL "use standard C++ classes for everything")
 set(wxTHIRD_PARTY_LIBRARIES ${wxTHIRD_PARTY_LIBRARIES} wxUSE_STL "use C++ STL classes")
 wx_dependent_option(wxUSE_STD_CONTAINERS "use standard C++ container classes" ON "wxUSE_STL" OFF)
 
@@ -506,7 +506,7 @@ if(WIN32)
     wx_option(wxUSE_TASKBARICON_BALLOONS "enable wxTaskBarIcon::ShowBalloon() method (Win32 only)")
     wx_option(wxUSE_UXTHEME "enable support for Windows XP themed look (Win32 only)")
     wx_option(wxUSE_WEBVIEW_EDGE "use wxWebView Edge (Chromium) backend (Windows 7+ only)" ${wxUSE_WEBVIEW_EDGE_DEFAULT})
-    wx_option(wxUSE_WEBVIEW_EDGE_STATIC "use wxWebView Edge with static loader" OFF)
+    wx_option(wxUSE_WEBVIEW_EDGE_STATIC "use wxWebView Edge with static loader")
     wx_option(wxUSE_WEBVIEW_IE "use wxWebView IE backend (Win32 only)")
     wx_option(wxUSE_WINRT "enable WinRT support" ${wxUSE_WINRT_DEFAULT})
     wx_option(wxUSE_WXDIB "use wxDIB class (Win32 only)")
