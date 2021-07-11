@@ -55,6 +55,10 @@ else()
     )
 endif()
 
+configure_file(build/cmake/wxWidgets-config.cmake.in ${wxOUTPUT_DIR}/wxWidgets-config.cmake @ONLY)
+wx_install(FILES ${wxOUTPUT_DIR}/wxWidgets-config.cmake DESTINATION lib/${wxPLATFORM_LIB_DIR}/cmake)
+
+
 # uninstall target
 if(MSVC_IDE)
     set(UNINST_NAME UNINSTALL)
