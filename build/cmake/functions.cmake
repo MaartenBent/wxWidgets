@@ -424,7 +424,7 @@ macro(wx_add_library name)
             BUNDLE DESTINATION Applications/wxWidgets
             )
 
-        install(EXPORT ${name}Targets NAMESPACE wx:: DESTINATION lib/${wxPLATFORM_LIB_DIR}/cmake)
+        wx_install(EXPORT ${name}Targets NAMESPACE wx:: DESTINATION lib/${wxPLATFORM_LIB_DIR}/cmake)
     endif()
 endmacro()
 
@@ -586,7 +586,11 @@ function(wx_set_builtin_target_properties target_name)
 
     wx_set_common_target_properties(${target_name} DEFAULT_WARNINGS)
     if(NOT wxBUILD_SHARED)
-        wx_install(TARGETS ${name} ARCHIVE DESTINATION "lib$<1:/>${wxPLATFORM_LIB_DIR}")
+        # Only install if we build as static libraries
+        wx_install(TARGETS ${name} EXPORT ${name}Targets
+            ARCHIVE DESTINATION "lib$<1:/>${wxPLATFORM_LIB_DIR}"
+            )
+        wx_install(EXPORT ${name}Targets NAMESPACE wx:: DESTINATION lib/${wxPLATFORM_LIB_DIR}/cmake)
     endif()
 endfunction()
 
@@ -640,14 +644,6 @@ function(wx_add_thirdparty_library var_name lib_name help_str)
         if(NOT ${${lib_name_upper}_FOUND})
             wx_option_force_value(${var_name} builtin)
         endif()
-    endif()
-
-    if(${var_name} STREQUAL "builtin" AND NOT wxBUILD_SHARED)
-        # Only install if we build as static libraries
-        wx_install(TARGETS ${target_name}
-            LIBRARY DESTINATION lib
-            ARCHIVE DESTINATION lib
-            )
     endif()
 
     set(wxTHIRD_PARTY_LIBRARIES ${wxTHIRD_PARTY_LIBRARIES} ${var_name} "${help_str}" PARENT_SCOPE)
