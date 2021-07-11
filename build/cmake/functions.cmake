@@ -97,9 +97,9 @@ function(wx_set_common_target_properties target_name)
     cmake_parse_arguments(wxCOMMON_TARGET_PROPS "DEFAULT_WARNINGS" "" "" ${ARGN})
 
     set_target_properties(${target_name} PROPERTIES
-        LIBRARY_OUTPUT_DIRECTORY "${wxOUTPUT_DIR}${wxPLATFORM_LIB_DIR}"
-        ARCHIVE_OUTPUT_DIRECTORY "${wxOUTPUT_DIR}${wxPLATFORM_LIB_DIR}"
-        RUNTIME_OUTPUT_DIRECTORY "${wxOUTPUT_DIR}${wxPLATFORM_LIB_DIR}"
+        LIBRARY_OUTPUT_DIRECTORY "${wxOUTPUT_DIR}$<1:/>${wxPLATFORM_LIB_DIR}"
+        ARCHIVE_OUTPUT_DIRECTORY "${wxOUTPUT_DIR}$<1:/>${wxPLATFORM_LIB_DIR}"
+        RUNTIME_OUTPUT_DIRECTORY "${wxOUTPUT_DIR}$<1:/>${wxPLATFORM_LIB_DIR}"
         )
 
     if(wxBUILD_PIC)
@@ -418,13 +418,13 @@ macro(wx_add_library name)
             set(runtime_dir "bin")
         endif()
         wx_install(TARGETS ${name} EXPORT ${name}Targets
-            LIBRARY DESTINATION "lib${wxPLATFORM_LIB_DIR}"
-            ARCHIVE DESTINATION "lib${wxPLATFORM_LIB_DIR}"
-            RUNTIME DESTINATION "${runtime_dir}${wxPLATFORM_LIB_DIR}"
+            LIBRARY DESTINATION "lib$<1:/>${wxPLATFORM_LIB_DIR}"
+            ARCHIVE DESTINATION "lib$<1:/>${wxPLATFORM_LIB_DIR}"
+            RUNTIME DESTINATION "${runtime_dir}$<1:/>${wxPLATFORM_LIB_DIR}"
             BUNDLE DESTINATION Applications/wxWidgets
             )
 
-        install(EXPORT ${name}Targets NAMESPACE wx:: DESTINATION lib${wxPLATFORM_LIB_DIR}/cmake)
+        install(EXPORT ${name}Targets NAMESPACE wx:: DESTINATION lib/${wxPLATFORM_LIB_DIR}/cmake)
     endif()
 endmacro()
 
@@ -586,7 +586,7 @@ function(wx_set_builtin_target_properties target_name)
 
     wx_set_common_target_properties(${target_name} DEFAULT_WARNINGS)
     if(NOT wxBUILD_SHARED)
-        wx_install(TARGETS ${name} ARCHIVE DESTINATION "lib${wxPLATFORM_LIB_DIR}")
+        wx_install(TARGETS ${name} ARCHIVE DESTINATION "lib$<1:/>${wxPLATFORM_LIB_DIR}")
     endif()
 endfunction()
 
