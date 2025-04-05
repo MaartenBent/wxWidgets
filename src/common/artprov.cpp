@@ -181,6 +181,11 @@ public:
         return wxArtProvider::GetBitmap(m_artId, m_artClient, size);
     }
 
+    virtual bool GetAlwaysUseExactSize() const override
+    {
+        return true;
+    }
+
 protected:
     virtual double GetNextAvailableScale(size_t& i) const override
     {

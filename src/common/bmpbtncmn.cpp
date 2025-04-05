@@ -109,6 +109,11 @@ public:
         return m_sizeDef;
     }
 
+    virtual bool GetAlwaysUseExactSize() const override
+    {
+        return true;
+    }
+
     virtual wxSize GetPreferredBitmapSizeAtScale(double scale) const override
     {
         // We can render the bitmap at any scale.

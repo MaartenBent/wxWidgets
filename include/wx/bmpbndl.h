@@ -125,6 +125,9 @@ public:
     // Get the physical size of the preferred bitmap at the given scale.
     wxNODISCARD wxSize GetPreferredBitmapSizeAtScale(double scale) const;
 
+    wxNODISCARD bool GetAlwaysUseExactSize() const;
+    wxNODISCARD bool SetAlwaysUseExactSize(bool enable);
+
     // Get preferred size, i.e. usually the closest size in which a bitmap is
     // available to the ideal size determined from the default size and the DPI
     // scaling, for the given window, in physical/logical pixels respectively.
@@ -282,6 +285,9 @@ public:
     // Note that this function is non-const because it may generate the bitmap
     // on demand and cache it.
     virtual wxBitmap GetBitmap(const wxSize& size) = 0;
+
+    virtual bool GetAlwaysUseExactSize() const = 0;
+    virtual bool SetAlwaysUseExactSize(bool enable);
 };
 
 #endif // _WX_BMPBNDL_H_

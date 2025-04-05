@@ -132,6 +132,8 @@ public:
     virtual wxSize GetDefaultSize() const override;
     virtual wxSize GetPreferredBitmapSizeAtScale(double scale) const override;
     virtual wxBitmap GetBitmap(const wxSize& size) override;
+    virtual bool GetAlwaysUseExactSize() const override;
+    virtual bool SetAlwaysUseExactSize(bool enable) override;
 
 protected:
     virtual double GetNextAvailableScale(size_t& i) const override;
@@ -191,6 +193,8 @@ private:
     // Note that it may be different from the size of the first entry if we
     // only have high resolution bitmap and no bitmap for 100% DPI.
     wxSize m_sizeDefault;
+
+    bool m_exactScale = false;
 
     // Common implementation of all ctors.
     void Init(const wxBitmap* bitmaps, size_t n);
@@ -336,6 +340,17 @@ wxBitmap wxBitmapBundleImplSet::GetBitmap(const wxSize& size)
     m_entries.push_back(entryNew);
 
     return entryNew.bitmap;
+}
+
+bool wxBitmapBundleImplSet::GetAlwaysUseExactSize() const
+{
+    return m_exactScale;
+}
+
+bool wxBitmapBundleImplSet::SetAlwaysUseExactSize(bool enable)
+{
+    m_exactScale = enable;
+    return true;
 }
 
 #ifdef __WXOSX__
@@ -575,6 +590,22 @@ wxSize wxBitmapBundle::GetPreferredBitmapSizeAtScale(double scale) const
     return m_impl->GetPreferredBitmapSizeAtScale(scale);
 }
 
+bool wxBitmapBundle::GetAlwaysUseExactSize() const
+{
+    if (!m_impl)
+        return false;
+
+    return m_impl->GetAlwaysUseExactSize();
+}
+
+bool wxBitmapBundle::SetAlwaysUseExactSize(bool enable)
+{
+    if (!m_impl)
+        return false;
+
+    return m_impl->SetAlwaysUseExactSize(enable);
+}
+
 wxBitmap wxBitmapBundle::GetBitmap(const wxSize& size) const
 {
     if ( !m_impl )
@@ -731,6 +762,9 @@ wxBitmapBundleImpl::GetNextAvailableScale(size_t& WXUNUSED(i)) const
 wxSize
 wxBitmapBundleImpl::DoGetPreferredSize(double scaleTarget) const
 {
+    if (GetAlwaysUseExactSize())
+        return GetDefaultSize() * scaleTarget;
+
     double scaleBest = 0.0;
     double scaleLast = 0.0;
 
@@ -858,6 +892,11 @@ size_t wxBitmapBundleImpl::GetIndexToUpscale(const wxSize& size) const
     }
 
     return indexBest != (size_t)-1 ? indexBest : indexLast;
+}
+
+bool wxBitmapBundleImpl::SetAlwaysUseExactSize(bool WXUNUSED(enable))
+{
+    return false;
 }
 
 wxBitmapBundleImpl::~wxBitmapBundleImpl()

@@ -112,6 +112,7 @@ public:
     virtual wxSize GetDefaultSize() const override;
     virtual wxSize GetPreferredBitmapSizeAtScale(double scale) const override;
     virtual wxBitmap GetBitmap(const wxSize& size) override;
+    virtual bool GetAlwaysUseExactSize() const override;
 
 private:
     wxBitmap DoRasterize(const wxSize& size);
@@ -142,6 +143,11 @@ private:
 wxSize wxBitmapBundleImplSVG::GetDefaultSize() const
 {
     return m_sizeDef;
+}
+
+bool wxBitmapBundleImplSVG::GetAlwaysUseExactSize() const
+{
+    return true;
 }
 
 wxSize wxBitmapBundleImplSVG::GetPreferredBitmapSizeAtScale(double scale) const

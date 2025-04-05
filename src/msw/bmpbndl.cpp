@@ -143,6 +143,7 @@ public:
     virtual wxSize GetDefaultSize() const override;
     virtual wxSize GetPreferredBitmapSizeAtScale(double scale) const override;
     virtual wxBitmap GetBitmap(const wxSize& size) override;
+    virtual bool GetAlwaysUseExactSize() const override;
 
 protected:
     virtual double GetNextAvailableScale(size_t& i) const override;
@@ -295,6 +296,11 @@ wxBitmap wxBitmapBundleImplRC::GetBitmap(const wxSize& size)
     const ResourceInfo& info = m_resourceInfos[i];
 
     return AddBitmap(info, sizeDef*info.scale, size);
+}
+
+bool wxBitmapBundleImplRC::GetAlwaysUseExactSize() const
+{
+    return false;
 }
 
 // ============================================================================
