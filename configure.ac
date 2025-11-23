@@ -2764,7 +2764,10 @@ dnl Check for LunaSVG libraries
 dnl ------------------------------------------------------------------------
 
 if test "$wxUSE_LUNASVG" = "yes"; then
+    USE_LUNASVG=1
     AC_DEFINE(wxUSE_LUNASVG)
+else
+    USE_LUNASVG=0
 fi
 
 dnl ------------------------------------------------------------------------
