@@ -26,10 +26,6 @@
 #include "wx/display.h"
 #include "wx/scopedarray.h"
 
-#include "wx/fontutil.h"
-#include "wx/settings.h"
-static wxNativeFontInfo m_fontInfo(*wxSystemSettings::GetFont(wxSYS_DEFAULT_GUI_FONT).GetNativeFontInfo());
-
 //-----------------------------------------------------------------------------
 // Local functions
 //-----------------------------------------------------------------------------
@@ -228,7 +224,7 @@ void wxGCDCImpl::Init(wxGraphicsContext* ctx)
     m_ok = false;
 
     m_pen = wxPen(wxColour(0, 0, 0));
-    m_font = wxFont(m_fontInfo);
+    m_font = wxFont(wxFontInfo(9.0).FaceName("Segoe UI"));
     m_brush = wxBrush(wxColour(255, 255, 255));
 
     m_graphicContext = nullptr;

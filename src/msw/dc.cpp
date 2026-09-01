@@ -1384,7 +1384,7 @@ void wxMSWDCImpl::DoDrawRotatedText(const wxString& text,
     }
     else // Use default font appropriate for rotated text.
     {
-        font = *wxSWISS_FONT;
+        font = wxFont(wxFontInfo(9).Family(wxFONTFAMILY_SWISS));
         if ( m_window )
             font.WXAdjustToPPI(m_window->GetDPI());
     }
