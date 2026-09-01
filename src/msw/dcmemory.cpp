@@ -31,10 +31,6 @@
 
 #include "wx/msw/private.h"
 
-#include "wx/fontutil.h"
-#include "wx/settings.h"
-static wxNativeFontInfo m_fontInfo(*wxSystemSettings::GetFont(wxSYS_DEFAULT_GUI_FONT).GetNativeFontInfo());
-
 // ----------------------------------------------------------------------------
 // wxMemoryDCImpl
 // ----------------------------------------------------------------------------
@@ -72,7 +68,7 @@ void wxMemoryDCImpl::Init()
     {
         SetBrush(wxBrush(wxColour(255, 255, 255)));
         SetPen(wxPen(wxColour(0, 0, 0)));
-        SetFont(wxFont(m_fontInfo));
+        SetFont(wxFont(wxFontInfo(9.0).FaceName("Segoe UI")));
 
         // the background mode is only used for text background and is set in
         // DrawText() to OPAQUE as required, otherwise always TRANSPARENT
